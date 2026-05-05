@@ -15,7 +15,7 @@ function App() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/query", { query });
+      const res = await axios.post("https://graph-rag-movie-system.onrender.com/query", { query });
 
       setMessages((prev) => [...prev, { role: "bot", text: res.data.answer }]);
 
@@ -36,7 +36,7 @@ function App() {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:3000/upload", formData);
+      await axios.post("https://graph-rag-movie-system.onrender.com/upload", formData);
       alert("✅ Movie dataset indexed!");
     } catch (err) {
       console.error(err);
