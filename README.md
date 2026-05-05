@@ -23,3 +23,9 @@ An AI-powered movie question-answering and recommendation system using hybrid re
 cd Backend
 npm install
 node server.js
+
+###Frontend
+```bash
+cd Frontend
+npm install
+npm run dev
