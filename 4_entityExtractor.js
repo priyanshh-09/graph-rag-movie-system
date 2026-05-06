@@ -127,7 +127,7 @@ async function extractBatch(fileInfo, start, end, attempt = 1) {
  *   - 20 batches ÷ 5 parallel = 4 rounds ≈ 1-2 minutes total
  *   - Pass 2: Retry any failed batches
  */
-async function extractAllEntities(pdfPath, totalMovies = 200, batchSize = 20) {
+async function extractAllEntities(pdfPath, totalMovies = 20, batchSize = 20) {
   // Upload PDF once
   const fileInfo = await uploadPDF(pdfPath);
 

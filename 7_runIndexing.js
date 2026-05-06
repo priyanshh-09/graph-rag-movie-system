@@ -49,11 +49,11 @@ async function runIndexing(pdfPath) {
   }
 }
 
-// const pdfPath = './data/movies_200.pdf';
-// if (!pdfPath) {
-//   console.error("Usage: npm run index -- ./data/movies.pdf");
-//   process.exit(1);
-// }
+const pdfPath = './data/movies_200.pdf';
+if (!pdfPath) {
+  console.error("Usage: npm run index -- ./data/RealMovies.pdf");
+  process.exit(1);
+}
 
-export { runIndexing };
-// runIndexing(pdfPath);
+// export { runIndexing };
+runIndexing(pdfPath);

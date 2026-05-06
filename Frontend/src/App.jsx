@@ -28,20 +28,20 @@ function App() {
     setQuery("");
   };
 
-  const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // const handleUpload = async (e) => {
+  //   const file = e.target.files[0];
+  //   if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+  //   const formData = new FormData();
+  //   formData.append("file", file);
 
-    try {
-      await axios.post("https://graph-rag-movie-system.onrender.com/upload", formData);
-      alert("✅ Movie dataset indexed!");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //   try {
+  //     await axios.post("https://graph-rag-movie-system.onrender.com/upload", formData);
+  //     alert("✅ Movie dataset indexed!");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex justify-center p-6">
@@ -50,16 +50,16 @@ function App() {
         <h1 className="text-3xl font-bold mb-2">
            GraphRAG Movie Intelligence
         </h1>
-        <p className="text-gray-400 mb-4">
+        {/* <p className="text-gray-400 mb-4">
           Upload a movie dataset and ask anything
-        </p>
+        </p> */}
 
         {/* UPLOAD */}
-        <input
+        {/* <input
           type="file"
           onChange={handleUpload}
           className="mb-4 block text-sm text-gray-300"
-        />
+        /> */}
 
         {/* CHAT BOX */}
         <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-2xl h-[400px] overflow-y-auto shadow-lg mb-4 border border-gray-700">

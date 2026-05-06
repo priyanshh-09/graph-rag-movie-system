@@ -69,12 +69,12 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 
   const filePath = req.file.path;
 
-  await runIndexing(filePath);
+  // await runIndexing(filePath);
 
   res.json({ message: "Movie dataset indexed successfully" });
 });
 
 //  Start server
-app.listen(3000, () => {
-  console.log("🚀 Server running on http://localhost:3000");
+app.listen(process.env.PORT, () => {
+  console.log("🚀 Server running on Port",process.env.PORT);
 });
