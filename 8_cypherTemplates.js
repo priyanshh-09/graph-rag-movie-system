@@ -146,11 +146,14 @@ function buildCypher(plan) {
           const [grpLabel, grpProp] = step.groupBy.split(".");
           const grpVar = LABEL_VAR_MAP[grpLabel];
           const [aggLabel] = (step.field || "").split(".");
-          const aggTarget = LABEL_VAR_MAP[aggLabel] || "*";
+          const aggTarget = aggLabel && LABEL_VAR_MAP[aggLabel]
+  ? LABEL_VAR_MAP[aggLabel]
+  : "*";
           returnClause = `RETURN ${grpVar}.${grpProp}, ${step.function}(${aggTarget}) AS ${alias}`;
         } else {
           const [aggLabel] = (step.field || "").split(".");
-          const aggTarget = LABEL_VAR_MAP[aggLabel] || "*";
+          const aggTarget =
+            aggLabel && LABEL_VAR_MAP[aggLabel] ? LABEL_VAR_MAP[aggLabel] : "*";
           returnClause = `RETURN ${step.function}(${aggTarget}) AS ${alias}`;
         }
         break;
