@@ -47,9 +47,7 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex justify-center p-6">
       <div className="w-full max-w-3xl">
         {/* HEADER */}
-        <h1 className="text-3xl font-bold mb-2">
-           GraphRAG Movie Intelligence
-        </h1>
+        <h1 className="text-3xl font-bold mb-2">GraphRAG Movie Intelligence</h1>
         {/* <p className="text-gray-400 mb-4">
           Upload a movie dataset and ask anything
         </p> */}
@@ -60,6 +58,46 @@ function App() {
           onChange={handleUpload}
           className="mb-4 block text-sm text-gray-300"
         /> */}
+
+        {/* Example Queries */}
+        <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-2xl border border-gray-700 shadow-lg mb-4">
+          <h2 className="text-lg font-semibold mb-3">Try asking</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <div
+              onClick={() => setQuery("Movies like Inception")}
+              className="bg-gray-700 hover:bg-gray-600 transition p-3 rounded-xl cursor-pointer"
+            >
+              🎬 Movies like Inception
+            </div>
+
+            <div
+              onClick={() => setQuery("Movies directed by Christopher Nolan")}
+              className="bg-gray-700 hover:bg-gray-600 transition p-3 rounded-xl cursor-pointer"
+            >
+              🎥 Movies directed by Christopher Nolan
+            </div>
+
+            <div
+              onClick={() => setQuery("Tell me about Interstellar")}
+              className="bg-gray-700 hover:bg-gray-600 transition p-3 rounded-xl cursor-pointer"
+            >
+              👤 Tell me about Interstellar
+            </div>
+
+            <div
+              onClick={() =>
+                setQuery(
+                  "How is Leonardo DiCaprio related to Christopher Nolan?",
+                )
+              }
+              className="bg-gray-700 hover:bg-gray-600 transition p-3 rounded-xl cursor-pointer"
+            >
+              🔗 How is Leonardo DiCaprio related to Christopher Nolan?
+            </div>
+          </div>
+        </div>
+
 
         {/* CHAT BOX */}
         <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-2xl h-[400px] overflow-y-auto shadow-lg mb-4 border border-gray-700">
