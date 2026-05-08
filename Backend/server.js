@@ -6,7 +6,7 @@ dotenv.config();
 
 import multer from "multer";
 
-import { runIndexing } from "../7_runIndexing.js";
+// import { runIndexing } from "../7_runIndexing.js";
 import { resolveQueryEntities } from "../9_entityResolver.js";
 import { classifyQuery } from "../10_queryClassifier.js";
 import { handleGraphQuery } from "../11_graphHandler.js";
