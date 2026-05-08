@@ -56,6 +56,24 @@ app.post("/query", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+
+// app.post("/query", async (req, res) => {
+//   try {
+//     console.log("Incoming query:", req.body.query);
+
+//     const result = await runQuery(req.body.query);
+
+//     console.log("Final result:", result);
+
+//     res.json(result);
+//   } catch (err) {
+//     console.error("QUERY ERROR:", err);
+
+//     res.status(500).json({
+//       error: err.message,
+//     });
+//   }
+// });
  
 //Upload route
 app.post("/upload", upload.single("file"), async (req, res) => {

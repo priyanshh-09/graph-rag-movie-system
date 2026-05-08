@@ -116,7 +116,7 @@ function buildCypher(plan) {
         const fromVar = LABEL_VAR_MAP[step.from];
         const toVar = LABEL_VAR_MAP[step.to];
         matchClauses.push(
-          `MATCH (${fromVar}:${step.from})-[:${step.rel}]->(${toVar}:${step.to})`
+          `MATCH (${fromVar}:${step.from})-[:${step.rel}]->(${toVar}:${step.to})`,
         );
         break;
       }
@@ -142,20 +142,26 @@ function buildCypher(plan) {
 
       case "aggregation": {
         const alias = step.alias || `${step.function}_result`;
+
+        const [aggLabel] = (step.field || "").split(".");
+        const aggVar = LABEL_VAR_MAP[aggLabel];
+
+        // Check if variable is actually defined in MATCH clauses
+        const isDefined = matchClauses.some((clause) =>
+          clause.includes(`(${aggVar}:`),
+        );
+
+        const aggTarget = isDefined ? aggVar : "*";
+
         if (step.groupBy) {
           const [grpLabel, grpProp] = step.groupBy.split(".");
           const grpVar = LABEL_VAR_MAP[grpLabel];
-          const [aggLabel] = (step.field || "").split(".");
-          const aggTarget = aggLabel && LABEL_VAR_MAP[aggLabel]
-  ? LABEL_VAR_MAP[aggLabel]
-  : "*";
+
           returnClause = `RETURN ${grpVar}.${grpProp}, ${step.function}(${aggTarget}) AS ${alias}`;
         } else {
-          const [aggLabel] = (step.field || "").split(".");
-          const aggTarget =
-            aggLabel && LABEL_VAR_MAP[aggLabel] ? LABEL_VAR_MAP[aggLabel] : "*";
           returnClause = `RETURN ${step.function}(${aggTarget}) AS ${alias}`;
         }
+
         break;
       }
 
