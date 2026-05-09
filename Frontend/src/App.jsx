@@ -6,6 +6,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [debug, setDebug] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [steps, setSteps] = useState([]);
 
   const handleAsk = async () => {
     if (!query) return;
@@ -20,6 +21,7 @@ function App() {
       setMessages((prev) => [...prev, { role: "bot", text: res.data.answer }]);
 
       setDebug(res.data.debug);
+      setSteps(res.data.steps || []);
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +100,6 @@ function App() {
           </div>
         </div>
 
-
         {/* CHAT BOX */}
         <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-2xl h-[400px] overflow-y-auto shadow-lg mb-4 border border-gray-700">
           {messages.map((msg, i) => (
@@ -136,6 +137,24 @@ function App() {
             Ask
           </button>
         </div>
+
+        {/* PIPELINE ACTIVITY */}
+        {steps.length > 0 && (
+          <div className="bg-gray-800/60 backdrop-blur-md p-4 rounded-2xl border border-gray-700 shadow-md mb-4">
+            <h2 className="font-semibold mb-3">⚡ Pipeline Activity</h2>
+
+            <div className="space-y-2">
+              {steps.map((step, i) => (
+                <div
+                  key={i}
+                  className="bg-gray-700 px-3 py-2 rounded-lg text-sm text-gray-200"
+                >
+                  {step}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* DEBUG PANEL */}
         {debug && (

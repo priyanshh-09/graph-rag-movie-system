@@ -43,13 +43,33 @@ app.post("/query", async (req, res) => {
     }
 
     // 🔥 SEND DEBUG INFO ALSO
+    // res.json({
+    //   answer,
+    //   debug: {
+    //     entities: resolved.entities.map((e) => e.nodeName),
+    //     type: classification.type,
+    //     db: classification.type === "similarity" ? "Vector + Graph" : "Graph",
+    //   },
+    // });
+
+    // 🔥 SEND DEBUG INFO ALSO
     res.json({
       answer,
+
       debug: {
         entities: resolved.entities.map((e) => e.nodeName),
         type: classification.type,
         db: classification.type === "similarity" ? "Vector + Graph" : "Graph",
       },
+
+      steps: [
+        "🔍 Extracted entities from query",
+        "🗄️ Resolved entities using Neo4j",
+        classification.type === "similarity"
+          ? "📐 Retrieved semantic context from Pinecone"
+          : "🧭 Executed graph traversal query",
+        "🧠 Generated final response using Gemini",
+      ],
     });
   } catch (err) {
     console.error(err);
