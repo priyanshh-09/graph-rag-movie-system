@@ -23,24 +23,40 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 const upload = multer({ dest: "uploads/" });
 
-//  MAIN QUERY API
+
+// MAIN QUERY API
 app.post("/query", async (req, res) => {
   try {
     const { query } = req.body;
 
+    const steps = [];
+
     // Step 1: Entity resolution
     const resolved = await resolveQueryEntities(query);
+    steps.push("🔍 Extracted entities from query");
 
     // Step 2: Classification
     const classification = await classifyQuery(query, resolved);
+    steps.push(`🧠 Classified query as ${classification.type}`);
 
     // Step 3: Routing
     let answer;
+
     if (classification.type === "similarity") {
+
+      steps.push("🗄️ Resolved entities using Neo4j");
+      steps.push("📐 Retrieved semantic context from Pinecone");
+
       answer = await handleSimilarityQuery(query, resolved);
+
     } else {
+
+      steps.push("🗄️ Resolved entities using Neo4j");
+      steps.push("🧭 Executed graph traversal query");
+
       answer = await handleGraphQuery(query, resolved);
     }
+
 
     // 🔥 SEND DEBUG INFO ALSO
     // res.json({
@@ -53,14 +69,24 @@ app.post("/query", async (req, res) => {
     // });
 
     // 🔥 SEND DEBUG INFO ALSO
+
+    // Step 4: Final response generation
+    steps.push("🧠 Generated final response using Gemini");
+
+    // SEND RESPONSE
+
     res.json({
       answer,
 
       debug: {
         entities: resolved.entities.map((e) => e.nodeName),
         type: classification.type,
-        db: classification.type === "similarity" ? "Vector + Graph" : "Graph",
+        db:
+          classification.type === "similarity"
+            ? "Vector + Graph"
+            : "Graph",
       },
+
 
       steps: [
         "🔍 Extracted entities from query",
@@ -70,10 +96,17 @@ app.post("/query", async (req, res) => {
           : "🧭 Executed graph traversal query",
         "🧠 Generated final response using Gemini",
       ],
+
+      steps,
+
     });
+
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Something went wrong" });
+
+    res.status(500).json({
+      error: "Something went wrong",
+    });
   }
 });
 
